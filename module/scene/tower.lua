@@ -258,7 +258,7 @@ end
 function scene.unload()
     MSG.clear()
     TEXT:clear()
-    ZENITHA.setAppInfo("Zenith Clicker", SYSTEM .. " " .. (require 'version'.appVer))
+    ZENITHA.setAppInfo("Zenith Clicker Unabstracted", SYSTEM .. " " .. (require 'version'.appVer))
 end
 
 function scene.mouseMove(x, y, _, dy)

@@ -556,7 +556,7 @@ scene.widgetList = {
                     STAT.oldHitbox = not STAT.oldHitbox
                     MSG('dark', "Force old hitbox: " .. (STAT.oldHitbox and "ON" or "OFF"))
                     SFX.play(STAT.oldHitbox and 'social_online' or 'social_offline')
-                    TEXTS.version:set(SYSTEM .. (STAT.oldHitbox and " T" or " V") .. (require 'version'.verStr))
+                    TEXTS.version:set(SYSTEM .. (STAT.oldHitbox and " T" or " V") .. (require 'version'.verStr) .. ' Unabstracted')
                 elseif data == 'true_ending' then
                     SFX.play('warp')
                     SCN.go('ending', 'warp')
@@ -618,7 +618,7 @@ scene.widgetList = {
             if TASK.lock('import', 4.2) then
                 SFX.play('notify')
                 MSG('dark',
-                    "Import data from clipboard text?\nThe version must match; all progress you made so far will be permanently lost!\nPress again to confirm",
+                    "Import data from clipboard text?\nAll local progress will be lost, and a vanilla file will be assimilated!\nPress again to confirm",
                     4.2)
                 return
             end
@@ -636,20 +636,32 @@ scene.widgetList = {
                 MSG('dark', "Invalid data format")
                 SFX.play('staffwarning')
                 return
-            elseif res1.version > STAT.version then
+            elseif res1.version > STAT.version and res1.mod == 'unabstracted' then
                 MSG('error', "Cannot import data from future versions\nPlease update your game first!")
                 SFX.play('staffwarning')
                 return
-            elseif res1.mod ~= 'vanilla' then
-                MSG('dark', "Cannot import data from modded version")
+            elseif res1.mod == 'aFoolsMod' then
+                MSG('dark', "Only a fool would try to import from a different mod...")
                 SFX.play('staffwarning')
                 return
+            elseif res1.mod ~= 'vanilla' and res1.mod ~= 'unabstracted' then
+                MSG('dark', "Cannot import data from different modded version, this file is from " .. res1.mod)
+                SFX.play('staffwarning')
+                return
+            elseif res1.version > STAT.version then
+                if TASK.lock('importFuture', 4.1) then
+                    SFX.play('notify')
+                    MSG('warn', "You may lose data by importing from future vanilla versions, press again to confirm")
+                    return
+                end
+                TASK.unlock('importFuture')
             end
             TABLE.update(STAT, res1)
             BEST, ACHV = res2, res3
             setmetatable(BEST.highScore, Metatable.best_highscore)
             GAME.refreshLockState()
             setmetatable(BEST.speedrun, Metatable.best_speedrun)
+            STAT.mod = 'unabstracted'
             if STAT.system ~= SYSTEM then
                 STAT.system = SYSTEM
                 IssueAchv('zenith_relocation')

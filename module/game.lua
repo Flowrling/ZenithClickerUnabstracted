@@ -2364,24 +2364,7 @@ function GAME.finish(reason)
                     IssueAchv('its_kinda_rare')
                 end
             end
-            if not TestMode and SupportCurl then
-                local curl =
-                    SYSTEM == 'Windows' and [[curl -s -X POST https://vercel-leaderboard-one.vercel.app/api -H "Content-Type: application/json" -d "$1"]] or
-                    [[curl -s -X POST https://vercel-leaderboard-one.vercel.app/api -H 'Content-Type: application/json' -d '$1']]
-                if curl then
-                    local json = JSON.encode {
-                        hid = STAT.hid,
-                        uid = STAT.uid,
-                        combo = GAME.comboStr,
-                        alt = GAME.roundHeight,
-                        time = GAME.gigaTime and roundUnit(GAME.gigaTime, .001),
-                    }
-                    if SYSTEM == 'Windows' then json = json:gsub('"', [[\"]]) end
-                    DAILYCMD = curl:repD(json)
-                    ASYNC.runCmd('submitDaily', DAILYCMD)
-                    MSG('dark', "Submitting Daily Challenge score...")
-                end
-            end
+            MSG('dark', "Cannot submit Daily score in Unabstracted. Try again in Vanilla!")
         end
 
         -- Update ZP

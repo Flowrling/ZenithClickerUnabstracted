@@ -4,7 +4,7 @@ require 'Zenitha'
 
 ZENITHA.setMainLoopSpeed(240)
 ZENITHA.setRenderRate(50)
-ZENITHA.setAppInfo("Zenith Clicker", SYSTEM .. " " .. (require 'version'.appVer))
+ZENITHA.setAppInfo("Zenith Clicker Unabstracted", SYSTEM .. " " .. (require 'version'.appVer))
 ZENITHA.setClickDist(62)
 ZENITHA._cursor.speed = 1600
 
@@ -485,6 +485,12 @@ BG.add('black', { draw = function() GC.clear(0, 0, 0) end })
 BG.set('black')
 
 TEXTS = { -- Font size can only be 30 and 50 here !!!
+
+    -- Unabstracted texts
+
+
+
+    -- Vanilla texts
     version    = GC.newText(FONT.get(30)),
     mod        = GC.newText(FONT.get(30)),
     mpPreview  = GC.newText(FONT.get(30)),
@@ -569,7 +575,7 @@ BEST = {
 }
 
 STAT = {
-    mod = 'vanilla',
+    mod = 'unabstracted',
     version = nil, -- will be set after loading
     system = SYSTEM,
     joinDate = os.date("%b %Y"),
@@ -1750,7 +1756,7 @@ RefreshDaily()
 TABLE.update(TextColor, BaseTextColor)
 TABLE.update(ShadeColor, BaseShadeColor)
 GAME.refreshCurrentCombo()
-TEXTS.version:set(SYSTEM .. (STAT.oldHitbox and " T" or " V") .. (require 'version'.verStr))
+TEXTS.version:set(SYSTEM .. (STAT.oldHitbox and " T" or " V") .. (require 'version'.verStr) .. ' Unabstracted')
 
 if SYSTEM == 'Web' then
     _G[('DiscordRPC')] = { update = NULL, setEnable = NULL }
