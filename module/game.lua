@@ -2083,6 +2083,9 @@ function GAME.start()
 
     GAME.playing = true
 
+
+    if not STAT.ingameLocks then MSG({'info', "Locks won't show in-game.\nUse code \"ingameLocks\" to enable them"}) end
+
     -- Statistics
     GAME.comboStr = table.concat(TABLE.sort(GAME.getHand(true)))
     GAME.prevPB = BEST.highScore[(GAME.isUltraRun and 'u' or '') .. GAME.comboStr]

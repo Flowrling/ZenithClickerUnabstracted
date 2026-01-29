@@ -692,9 +692,13 @@ local function drawPBline(h, pb, spd, textObj)
 end
 
 function drawUnabstracted()
-    
+    gc_setColor(TextColor)
+    gc_setAlpha(0.7)
     gc_replaceTransform(SCR.origin)
-    gc_draw(TEXTS.questBuffer, 1150, 200, 0, 0.8, 0.8, TEXTS.questBuffer:getWidth())
+
+    if GAME.playing then
+        gc_draw(TEXTS.questBuffer, 950, 120, 0, 0.8, 0.8)
+    end
 
 
 

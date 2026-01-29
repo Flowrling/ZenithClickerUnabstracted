@@ -143,6 +143,10 @@ TEXTURE = {
     },
 
     stat = {
+        -- Unabstracted
+        
+
+
         avatar = assets 'stat/avatar.png',
         clicker = assets 'stat/clicker.png',
         clicker_star = assets 'stat/clicker_star.png',
@@ -576,6 +580,7 @@ BEST = {
 
 STAT = {
     mod = 'unabstracted',
+    ingameLocks = false,
     version = nil, -- will be set after loading
     system = SYSTEM,
     joinDate = os.date("%b %Y"),

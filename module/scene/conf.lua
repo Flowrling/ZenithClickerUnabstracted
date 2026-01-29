@@ -567,7 +567,7 @@ scene.widgetList = {
                     MSG('dark', OverDevProgressText)
                 elseif data == 'repo' then
                     SFX.play('menuconfirm')
-                    love.system.openURL("https://github.com/MrZ626/ZenithClicker")
+                    love.system.openURL("https://github.com/Flowrling/ZenithClicker")
                 elseif data == 'mp' or data == 'music' then
                     if not BGM.isPlaying() or MusicPlayer then return end
                     MusicPlayer = true
@@ -585,13 +585,15 @@ scene.widgetList = {
                     UseAltName()
                     SFX.play('social_dm')
                 elseif data == 'resubmit' then
-                    if DAILYCMD then
-                        ASYNC.runCmd('submitDaily', DAILYCMD)
-                        MSG('info', "Re-submitting Daily Challenge score...")
-                        SFX.play('social_invite')
+                    MSG('warn', "No Dailies on Unabstracted!")
+                    SFX.play('failure', 1, 0, Tone(0))
+                    
+                elseif data == 'ingameLocks' then
+                    STAT.ingameLocks = not STAT.ingameLocks
+                    if STAT.ingameLocks then
+                        MSG('dark', 'Locks will show in-game\nThis will obstruct gameplay!')
                     else
-                        MSG('warn', "No buffered Daily Challenge score")
-                        SFX.play('failure', 1, 0, Tone(0))
+                        MSG('dark', 'Locks will not show in-game')
                     end
                 else
                     local msg = "Invalid code '" .. data .. "' in clipboard."
