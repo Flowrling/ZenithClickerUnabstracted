@@ -473,6 +473,9 @@ FONT.load {
     led = "assets/UniDreamLED.ttf",
 }
 FontLoaded = SYSTEM == 'Web' or MATH.roll(.62)
+
+if FontLoaded then MSG._new({'info', 'Decided to load font immediately'}) end
+
 FONT.setDefaultFont(FontLoaded and 'sans' or 'serif')
 FONT.setOnInit(function(font, size)
     font:setFallbacks(FONT.get(size, '_norm'))
@@ -526,7 +529,11 @@ TEXTS = { -- Font size can only be 30 and 50 here !!!
 }
 if not FontLoaded then
     TASK.new(function()
-        local loadTime = love.timer.getTime() + (MATH.roll(.9626) and MATH.rand(2.6, 6.26) or 26)
+        local unloadedDuration = (MATH.roll(.9626) and MATH.rand(2.6, 6.26) or 26)
+        local loadTime = love.timer.getTime() + unloadedDuration
+
+        MSG._new({'info', string.format('Font will load in %.2fs', unloadedDuration)})
+
         while love.timer.getTime() < loadTime do
             TASK.yieldT(0.1)
             if GAME.anyRev then
