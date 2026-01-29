@@ -691,6 +691,18 @@ local function drawPBline(h, pb, spd, textObj)
     gc_rectangle('fill', -1.26 * (obj:getWidth() + 12), y - 2, -2600, 4)
 end
 
+function drawUnabstracted()
+    
+    gc_replaceTransform(SCR.origin)
+    gc_draw(TEXTS.questBuffer, 1150, 200, 0, 0.8, 0.8, TEXTS.questBuffer:getWidth())
+
+
+
+
+
+
+end
+
 function scene.draw()
     local t = love.timer.getTime()
     if GAME.zenithTraveler then
@@ -702,6 +714,7 @@ function scene.draw()
     end
 
     if not GAME.invisUI then
+        
         -- Wind Particles
         if GAME.height <= 1650 then
             gc_replaceTransform(SCR.origin)
@@ -800,6 +813,7 @@ function scene.draw()
                 gc_draw(TEXTS.mpPreview, 1370, 235, 0, 1, 1, TEXTS.mpPreview:getWidth())
             end
         end
+        drawUnabstracted()
     end
 
     -- Result

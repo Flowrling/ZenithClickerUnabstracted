@@ -487,7 +487,7 @@ BG.set('black')
 TEXTS = { -- Font size can only be 30 and 50 here !!!
 
     -- Unabstracted texts
-
+    questBuffer = GC.newText(FONT.get(30)),
 
 
     -- Vanilla texts
