@@ -491,7 +491,8 @@ BG.set('black')
 TEXTS = { -- Font size can only be 30 and 50 here !!!
 
     -- Unabstracted texts
-    questBuffer = GC.newText(FONT.get(30)),
+    zcu_questBuffer = GC.newText(FONT.get(30)),
+    zcu_timer       = GC.newText(FONT.get(30)),
 
 
     -- Vanilla texts
@@ -530,9 +531,9 @@ TEXTS = { -- Font size can only be 30 and 50 here !!!
     gigatime   = GC.newText(FONT.get(50)),
     floorTime  = GC.newText(FONT.get(30)),
     rankTime   = GC.newText(FONT.get(30)),
-    slogan     = GC.newText(FONT.get(30), "CROWD THE TOWER!"),
-    slogan_EX  = GC.newText(FONT.get(30), "THRONG THE TOWER!"),
-    slogan_rEX = GC.newText(FONT.get(30), "OVERFLOW THE TOWER!"),
+    slogan     = GC.newText(FONT.get(30), "LEARN THE TOWER!"),
+    slogan_EX  = GC.newText(FONT.get(30), "STUDY THE TOWER!"),
+    slogan_rEX = GC.newText(FONT.get(30), "REALISE THE TOWER!"),
     forfeit    = GC.newText(FONT.get(50), "KEEP HOLDING TO FORFEIT"),
     credit     = GC.newText(FONT.get(30), "Almost all assets from TETR.IO"),
     test       = GC.newText(FONT.get(50), "TEST"),
@@ -581,6 +582,7 @@ BEST = {
 STAT = {
     mod = 'unabstracted',
     ingameLocks = false,
+    showGrid = false,
     version = nil, -- will be set after loading
     system = SYSTEM,
     joinDate = os.date("%b %Y"),

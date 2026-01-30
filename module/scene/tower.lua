@@ -694,12 +694,46 @@ end
 function drawUnabstracted()
     gc_setColor(TextColor)
     gc_setAlpha(0.7)
-    gc_replaceTransform(SCR.origin)
+    gc_replaceTransform(SCR.xOy_ul)
 
     if GAME.playing then
-        gc_draw(TEXTS.questBuffer, 950, 120, 0, 0.8, 0.8)
+        gc_draw(TEXTS.zcu_questBuffer, 1450, 200, 0, 0.8, 0.8)
+        
+        TEXTS.zcu_timer:set(string.format(
+            "%.1fs / %.1fs (x%.2f, effective %.2fs)\nCycle: %.1fs (effective %.2fs)", 
+            GAME.dmgTimer, 
+            GAME.dmgDelay, 
+            GAME.dmgTimerMul, 
+            GAME.dmgDelay*GAME.dmgTimerMul,
+            GAME.dmgCycle,
+            GAME.dmgCycle*GAME.dmgTimerMul 
+        ))
+        gc_draw(TEXTS.zcu_timer, 100, 320, 0, 0.7, 0.7)
+
+        -- TODO Time mult: 1000 100 with BL origin?
+
+        -- TODO Slowness text
+        
+        -- TODO various forms of damage (fault is most interesting)
+
+        -- TODO quest difficulty variables
     end
 
+    if STAT.showGrid then
+        debugPosText = GC.newText(FONT.get(30))
+        for i=-10, 20 do
+            local linePos = 100 * i
+        
+            gc_line(linePos, -2000, linePos, 2000)
+            gc_line(-2000, linePos, 2000, linePos)
+
+            debugPosText:set(linePos)
+
+            gc_draw(debugPosText, linePos, 0, 0, 0.5, 0.5)
+            gc_draw(debugPosText, 0, linePos, 0, 0.5, 0.5)
+        end
+    end
+    
 
 
 

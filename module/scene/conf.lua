@@ -595,6 +595,13 @@ scene.widgetList = {
                     else
                         MSG('dark', 'Locks will not show in-game')
                     end
+                elseif data == 'showGrid' then
+                    STAT.showGrid = not STAT.showGrid
+                    if STAT.showGrid then
+                        MSG('dark', 'DEBUG: Coordinate grid enabled')
+                    else
+                        MSG('dark', 'DEBUG: Coordinate grid disabled')
+                    end
                 else
                     local msg = "Invalid code '" .. data .. "' in clipboard."
                     if MATH.roll(.26) then
