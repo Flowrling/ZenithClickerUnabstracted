@@ -109,9 +109,9 @@ function scene.load()
     refreshSongInfo()
 end
 
--- function scene.unload()
---     SaveStat()
--- end
+function scene.unload()
+    SaveStat()
+end
 
 local bindHint = {
     "CARD-1",
