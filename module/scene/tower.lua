@@ -247,7 +247,7 @@ function scene.load()
 
     GAME.refreshDailyChallengeText()
     TASK.unlock('sure_quit')
-    ZENITHA.setAppInfo("Zenith Clicker")
+    ZENITHA.setAppInfo("Zenith Clicker Unabstracted")
 
     if PendingComboFromRecord then
         applyCombo(PendingComboFromRecord)

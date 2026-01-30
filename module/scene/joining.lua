@@ -15,7 +15,7 @@ function scene.update(dt)
     elseif t1 > 0 then
         t1 = t1 - dt
         if t1 <= 0 then
-            TEXTS.load:set("GETTING READY TO SPECTATE...")
+            TEXTS.load:set("GETTING READY TO DEBUG...")
             BGM.setMaxSources(42)
             BGM.load(FILE.load('module/bgm_data.lua', '-luaon'))
             SFX.load('assets/sfx.ogg', FILE.load('module/sfx_data.lua', '-luaon'))

@@ -643,11 +643,27 @@ AchvNotice = {}
 
 TestMode = false
 
-function SaveBest() if not TestMode then love.filesystem.write('best.luaon', 'return' .. TABLE.dumpDeflate(BEST)) end end
+function SaveBest()
+    if not TestMode then
+        love.filesystem.write('best.luaon', 'return' .. TABLE.dumpDeflate(BEST))
+        MSG('dark', "Best scores saved")
+    end
+end
 
-function SaveStat() if not TestMode then love.filesystem.write('stat.luaon', 'return' .. TABLE.dumpDeflate(STAT)) end end
+function SaveStat()
+    if not TestMode then
+        love.filesystem.write('stat.luaon', 'return' .. TABLE.dumpDeflate(STAT))
+        MSG('dark', "Stats & options saved")
 
-function SaveAchv() if not TestMode then love.filesystem.write('achv.luaon', 'return' .. TABLE.dumpDeflate(ACHV)) end end
+    end
+end
+
+function SaveAchv()
+    if not TestMode then
+        love.filesystem.write('achv.luaon', 'return' .. TABLE.dumpDeflate(ACHV))
+        MSG('dark', "Achievements saved")
+    end
+end
 
 MSG.setSafeY(75)
 MSG.addCategory('dark', COLOR.D, COLOR.L)

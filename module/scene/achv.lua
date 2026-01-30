@@ -596,6 +596,7 @@ function scene.draw()
         gc_print("ACHIEVEMENTS", 15, 0)
     end
 
+    -- TODO show all tiers (wreaths) even if display requirements are not met
     -- Badge (wreath) count
     if STAT.maxFloor >= 10 and not whenItsReady and not TestMode then
         gc_replaceTransform(SCR.xOy_ur)

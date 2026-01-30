@@ -591,7 +591,7 @@ scene.widgetList = {
                 elseif data == 'ingameLocks' then
                     STAT.ingameLocks = not STAT.ingameLocks
                     if STAT.ingameLocks then
-                        MSG('dark', 'Locks will show in-game\nThis will obstruct gameplay!')
+                        MSG('warn', 'Locks will show in-game.\nThis will obstruct gameplay!')
                     else
                         MSG('dark', 'Locks will not show in-game')
                     end
