@@ -699,16 +699,21 @@ function drawUnabstracted()
     if GAME.playing then
         gc_draw(TEXTS.zcu_questBuffer, 1450, 200, 0, 0.8, 0.8)
         
+
+        local effectiveTimerMul = GAME.dmgTimerMul / (GAME.nightcore and 2.6 or 1)
         TEXTS.zcu_timer:set(string.format(
             "%.1fs / %.1fs (x%.2f, effective %.2fs)\nCycle: %.1fs (effective %.2fs)", 
             GAME.dmgTimer, 
             GAME.dmgDelay, 
-            GAME.dmgTimerMul, 
-            GAME.dmgDelay*GAME.dmgTimerMul,
+            effectiveTimerMul, 
+            GAME.dmgDelay*effectiveTimerMul,
             GAME.dmgCycle,
-            GAME.dmgCycle*GAME.dmgTimerMul 
+            GAME.dmgCycle*effectiveTimerMul 
         ))
         gc_draw(TEXTS.zcu_timer, 100, 320, 0, 0.7, 0.7)
+
+        
+
 
         -- TODO Time mult: 1000 100 with BL origin?
 
@@ -1468,7 +1473,7 @@ function scene.overDraw()
             gc_line(0, 0, 420 * cos(a), 420 * sin(a))
         end
     end
-
+    
     -- Test
     if TestMode then
         -- Watermark

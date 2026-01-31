@@ -493,7 +493,12 @@ TEXTS = { -- Font size can only be 30 and 50 here !!!
     -- Unabstracted texts
     zcu_questBuffer = GC.newText(FONT.get(30)),
     zcu_timer       = GC.newText(FONT.get(30)),
-
+    zcu_timeMult    = GC.newText(FONT.get(30)),
+    zcu_animMult    = GC.newText(FONT.get(30)),
+    zcu_damage      = GC.newText(FONT.get(30)),
+    zcu_questDiff   = GC.newText(FONT.get(30)),
+    zcu_health      = GC.newText(FONT.get(30)),
+    zcu_health_p2   = GC.newText(FONT.get(30)),
 
     -- Vanilla texts
     version    = GC.newText(FONT.get(30)),
