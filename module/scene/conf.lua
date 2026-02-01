@@ -1,5 +1,6 @@
 ---@type Zenitha.Scene
 local scene = {}
+local wipingProgress = false
 
 local clr = {
     D = { COLOR.HEX '191E31FF' },
@@ -92,6 +93,7 @@ end
 
 function scene.load()
     MSG.clear()
+    wipingProgress = false
     bindBuffer = nil
     SetMouseVisible(true)
     if GAME.anyRev ~= colorRev then
@@ -110,7 +112,7 @@ function scene.load()
 end
 
 function scene.unload()
-    SaveStat()
+    if not wipingProgress then SaveStat() end
 end
 
 local bindHint = {
@@ -187,6 +189,26 @@ function scene.keyDown(key, isRep)
                 SFX.play('irs')
             end
         end
+    elseif key == 'r' then
+        if TASK.lock('wipe1', 6) then
+            MSG('warn', "Wipe ALL your progress?? Everything you've done will be lost irrevocably! Press again to confirm!")
+            SFX.play('b2bcharge_blast_3', 1)
+        elseif TASK.lock('REALLYwipe', 6) then
+            MSG('error', "No, seriously! It will all be gone forever! Maybe even export it beforehand! Press again to confirm!")
+            SFX.play('b2bcharge_blast_4', 1)
+        else
+            FILE.delete('best.luaon')
+            FILE.delete('stat.luaon')
+            FILE.delete('achv.luaon')
+            TABLE.update(BEST, FILE.safeLoad('best.luaon', '-luaon') or NONE)
+            TABLE.update(STAT, FILE.safeLoad('stat.luaon', '-luaon') or NONE)
+            TABLE.update(ACHV, FILE.safeLoad('achv.luaon', '-luaon') or NONE)
+            wipingProgress = true
+            MSG('dark', "Goodbye, friend... I'm sorry this file wasn't good eno")
+            SFX.play('topout', 1)
+            ZENITHA._quit('fastfade')
+        end
+    
     elseif MusicPlayer then
         if key == 'left' then
             TASK.removeTask_code(Task_MusicEnd)

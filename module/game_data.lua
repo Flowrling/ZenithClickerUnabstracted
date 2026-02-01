@@ -5,6 +5,15 @@
 --                   Read at your own risk.                        --
 ---------------------------------------------------------------------
 
+-- Unabstracted below
+
+SwitchSickness = {
+    {text = "Your head spins...", desc = "SWITCH SICKNESS: x0.5 CSP"}
+}
+
+
+-- Unabstracted above
+
 GigaSpeedReq = { [0] = 7, 8, 8, 9, 9, 10, 1e99, 1e99, 1e99, 1e99, 1e99 }
 TeraMusicReq = { [0] = 9, 11, 11, 12, 12, 13, 13, 1e99, 1e99, 1e99 }
 
