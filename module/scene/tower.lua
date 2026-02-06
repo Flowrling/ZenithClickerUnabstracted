@@ -386,9 +386,9 @@ function scene.keyDown(key)
         if key == 'escape' or key == '\\' or key == 'space' then
             switchVisitor(false)
         elseif KBisDown('lctrl', 'rctrl') and key:match('^f%d%d?$') and tonumber(key:match('%d+')) <= 10 then
-            local floor = tonumber(key:sub(2))
-            GAME.height = Floors[floor - 1].top
-            if floor == 10 then GAME.height = GAME.height + 6.26 end
+            local f = tonumber(key:sub(2))
+            GAME.height = Floors[f - 1].top
+            if f == 10 then GAME.height = GAME.height + 6.26 end
         end
     else
         if M.EX == 0 then
@@ -867,15 +867,24 @@ function scene.draw()
         gc_draw(GAME.resIB, 400, 150, 0, .9)
         gc_setColor(COLOR.D)
         gc_mDraw(TEXTS.endHeight, 0, 135, 0, 1.8)
-        gc_mDraw(TEXTS.endFloor, 0, 204)
         gc_mDraw(TEXTS.zpChange, 220, 95, 0, .626)
         gc_draw(TEXTS.endResult, -617, 80, 0, .626)
         gc_draw(TEXTS.floorTime, -617, 226 - GAME.uiHide * 150, 0, .38)
         gc_draw(TEXTS.rankTime, -527, 226 - GAME.uiHide * 150, 0, .38)
         gc_setColor(COLOR.L)
         gc_mDraw(TEXTS.endHeight, 0, 130, 0, 1.8)
-        gc_mDraw(TEXTS.endFloor, 0, 201)
         gc_draw(TEXTS.endResult, -616, 78, 0, .626)
+        if GAME.gigaspeedEntered and GAME.gigaTime then
+            gc_setColor(1, 1, 1, .1)
+            GC.strokeDraw('full', 2.5, TEXTS.endFloor, -TEXTS.endFloor:getWidth() / 2, 201 - TEXTS.endFloor:getHeight() / 2)
+            gc_setColor(1, 1, 1, .2)
+            GC.strokeDraw('full', 1, TEXTS.endFloor, -TEXTS.endFloor:getWidth() / 2, 201 - TEXTS.endFloor:getHeight() / 2)
+        else
+            gc_setColor(COLOR.D)
+            gc_mDraw(TEXTS.endFloor, 0, 204)
+        end
+        gc_setColor(COLOR.L)
+        gc_mDraw(TEXTS.endFloor, 0, 201)
         gc_setColor(COLOR.DL)
         gc_draw(TEXTS.floorTime, -616, 224 - GAME.uiHide * 150, 0, .38)
         gc_draw(TEXTS.rankTime, -526, 224 - GAME.uiHide * 150, 0, .38)
@@ -1181,7 +1190,7 @@ function scene.overDraw()
 
 
         -- Quests
-        for i = 1, #GAME.quests do
+        for i = 1, GAME.maxQuestCount do
             local Q = GAME.quests[i]
             local text = Q.name
             local kx = min(Q.k, 1550 / text:getWidth())
@@ -1515,6 +1524,15 @@ function scene.overDraw()
         gc_setColor(.626, .626, .626, .626)
         gc_mDraw(TEXTS.version, GAME.invisUI and 0 or -260 * GAME.uiHide, -10, 0, .62)
     end
+    
+    -- GC.replaceTransform(SCR.xOy)
+    -- local y=0
+    -- GC.setColor(1,1,1)
+    -- FONT.set(20)
+    -- for k in next,HoldingButtons do
+    --     GC.print(k,100,100+y)
+    --     y=y+30
+    -- end
 end
 
 local function button_start()
