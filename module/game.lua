@@ -2062,6 +2062,8 @@ function GAME.start()
     TASK.removeTask_code(Task_MusicEnd)
     MusicPlayer = false
 
+
+
     GAME.omega = false
     GAME.negFloor = 1
     GAME.negEvent = 1
