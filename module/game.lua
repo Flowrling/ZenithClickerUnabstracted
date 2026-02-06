@@ -2459,7 +2459,7 @@ function GAME.finish(reason)
         else
             endFloorStr = ("B$1: $2"):repD((GAME.negFloor - 1) % 10 + 1, NegFloors[GAME.negFloor].name)
         end
-        TABLE.clear(GAME.endFloorStr)
+        TABLE.clear(GAME.endFloorFstr)
         if GAME.gigaspeedEntered then
             if GAME.gigaTime then
                 local t = GAME.gigaTime < 60 and roundUnit(GAME.gigaTime, .001) .. "s" or STRING.time_simp(GAME.gigaTime)
