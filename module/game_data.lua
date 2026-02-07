@@ -682,15 +682,15 @@ RevSwampName = {
 Floors = {
     [0] = { top = 0, name = "The Basement" },
     { top = 50,   event = {},                                                  name = "Hall of Beginnings" },
-    { top = 150,  event = { 'dmgDelay', -2, 'dmgWrong', 1 },                   name = "The Hotel",           MSshuffle = 1 },
-    { top = 300,  event = { 'dmgDelay', -2, 'dmgCycle', -.5 },                 name = "The Casino" },
-    { top = 450,  event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Arena" },
-    { top = 650,  event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'dmgWrong', 1 },  name = "The Museum",          MSshuffle = 2 },
-    { top = 850,  event = { 'dmgDelay', -1, 'dmgTime', 1, 'maxQuestSize', 1 }, name = "Abandoned Offices" },
-    { top = 1100, event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Laboratory",      MSshuffle = 3 },
-    { top = 1350, event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Core" },
-    { top = 1650, event = { 'dmgDelay', -.5, 'dmgWrong', 1 },                  name = "Corruption",          MSshuffle = 4 },
-    { top = 1e99, event = { 'dmgDelay', -.5, 'dmgCycle', -.5, 'dmgTime', 1 },  name = "Platform of the Gods" },
+    { top = 150,  event = { 'dmgDelay', -2, 'dmgWrong', 1 },                   name = "The Hotel", text = "F2:   -2s Timer   +1 FaultDmg", MSshuffle = 1},
+    { top = 300,  event = { 'dmgDelay', -2, 'dmgCycle', -.5 },                 name = "The Casino", text = "F3:   -2s Timer   -0.5s Cycle" },
+    { top = 450,  event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Arena", text = "F4:   -1s Timer   -0.5s Cycle" },
+    { top = 650,  event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'dmgWrong', 1 },  name = "The Museum", text = "F5:   -1s Timer   -0.5s Cycle   +1 FaultDmg", MSshuffle = 2 },
+    { top = 850,  event = { 'dmgDelay', -1, 'dmgTime', 1, 'maxQuestSize', 1 }, name = "Abandoned Offices", text = "F6:   -1s Timer   +1 TimerDmg   +1 MaxQuestSize" },
+    { top = 1100, event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Laboratory", text = "F7:   -1s Timer   -0.5s Cycle", MSshuffle = 3 },
+    { top = 1350, event = { 'dmgDelay', -1, 'dmgCycle', -.5 },                 name = "The Core", text = "F8:   -1s Timer   -0.5s Cycle" },
+    { top = 1650, event = { 'dmgDelay', -.5, 'dmgWrong', 1 },                  name = "Corruption", text = "F9:   -0.5s Timer   +1 FaultDmg", MSshuffle = 4 },
+    { top = 1e99, event = { 'dmgDelay', -.5, 'dmgCycle', -.5, 'dmgTime', 1 },  name = "Platform of the Gods", text = "F10:   -0.5s Timer   -0.5s Cycle   +1 TimerDmg" },
     { top = 1e99, name = "Stellar Nebula Frontier" }, -- Only name is used
     -- Initial: Delay=15. Cycle=5, Wrong=1
     -- Total: Delay-10, Cycle-3, Wrong+4
@@ -796,12 +796,13 @@ NegEvents = {
     -- B1: The Basement
     { h = -10 }, { text = 'b1.begin' },
     { h = -26 },
-    { text = 'b1.noAS', color = 'lB', cond = function() return GAME.mod.AS == 0 end },
+    { text = 'b1.noAS', color = 'lB', cond = function() return GAME.mod.AS == 0 end, event = {'needAlert', 'No magic... nothing happened.'} },
     {
         text = 'b1.ASoff',
         color = 'lO',
         cond = function() return GAME.mod.AS > 0 end,
         event = function()
+            GAME.needAlert = "Your ALL-SPIN was converted...   -10% Atk   +1% Timer"
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
             GAME.mod.AS = 0
@@ -811,24 +812,26 @@ NegEvents = {
     },
 
     -- B2: Zenith Restaurant
-    { h = -50 }, { event = { 'dmgDelay', -2 } },
+    { h = -50 }, { event = { 'dmgDelay', -2, 'needAlert', "B2:   -2s Timer   -10% Atk   -25% Clock" } },
     { event = { 'attackMul', -.1, 'timerMul', -.25 } },
     { h = -55 }, { text = 'b2.begin' },
     { h = -60 },
     {
         text = 'b2.effStart',
         event = function()
+            GAME.needAlert = "+Nightcore"
             GAME.nightcore = true
             RefreshBGM()
         end
     },
     { h = -90 },
-    { text = 'b2.noVL', color = 'lB', cond = function() return GAME.mod.VL == 0 end },
+    { text = 'b2.noVL', color = 'lB', cond = function() return GAME.mod.VL == 0 end, event = {'needAlert', 'No strength... nothing happened.'} },
     {
         text = 'b2.VLoff',
         color = 'lO',
         cond = function() return GAME.mod.VL > 0 end,
         event = function()
+            GAME.needAlert = "Your VOLATILITY was converted...   -10% Atk   +1% Timer"
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
             GAME.mod.VL = 0
@@ -837,12 +840,13 @@ NegEvents = {
         end,
     },
     { h = -120 },
-    { text = 'b2.noIN', color = 'lB', cond = function() return GAME.mod.IN == 0 end },
+    { text = 'b2.noIN', color = 'lB', cond = function() return GAME.mod.IN == 0 end, event = {'needAlert', 'No blindness... nothing happened.'} },
     {
         text = 'b2.INoff',
         color = 'lO',
         cond = function() return GAME.mod.IN > 0 end,
         event = function()
+            GAME.needAlert = "Your INVISIBILITY was converted...   -10% Atk   +1% Timer   +" .. GAME.mod.IN .. "s Cycle"
             GAME.dmgCycle = GAME.dmgCycle + GAME.mod.IN * 1
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
@@ -863,23 +867,24 @@ NegEvents = {
 
 
     -- B3: Underground Parking
-    { h = -150 }, { event = { 'dmgDelay', -2, 'dmgCycle', -.5 } },
+    { h = -150 }, { event = { 'dmgDelay', -2, 'dmgCycle', -.5, 'needAlert', 'B3:   -Nightcore   -10% Atk   -15% Clock' } },
     { event = { 'attackMul', -.1, 'timerMul', -.15 } },
     { h = -155 }, { text = 'b3.begin' },
     { h = -160 }, { text = 'b3.effStart' },
-    { h = -165 }, { event = { 'invisUI', true } },
-    { h = -170 }, { event = { 'invisUI', false } },
-    { h = -175 }, { event = { 'invisUI', true } },
+    { h = -165 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -5m' } },
+    { h = -170 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -5m' } },
+    { h = -175 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -10m' } },
     { h = -180 }, { text = 'b3.mid1' },
-    { h = -185 }, { event = { 'invisUI', false } },
-    { h = -195 }, { event = { 'invisUI', true } },
+    { h = -185 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -10m' } },
+    { h = -195 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -5m' } },
     { h = -200 },
-    { text = 'b3.noGV', color = 'lB', cond = function() return GAME.mod.GV == 0 end },
+    { text = 'b3.noGV', color = 'lB', cond = function() return GAME.mod.GV == 0 end, event = {'needAlert', 'No haste... nothing happened.   UI fading in -10m'} },
     {
         text = 'b3.GVoff',
         color = 'lO',
         cond = function() return GAME.mod.GV > 0 end,
         event = function()
+            GAME.needAlert = "Your GRAVITY was converted...   -10% Atk   +1% Timer   +" .. GAME.mod.GV * 4 .. "s Timer   UI fading in -10m"
             GAME.dmgDelay = GAME.dmgDelay + GAME.mod.GV * 4
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
@@ -889,27 +894,28 @@ NegEvents = {
             RefreshBGM()
         end,
     },
-    { h = -200 }, { event = { 'invisUI', false } },
-    { h = -210 }, { event = { 'invisUI', true } },
+    { h = -200 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -10m' } },
+    { h = -210 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -40m' } },
     { h = -220 }, { text = 'b3.mid2' },
-    { h = -250 }, { event = { 'invisUI', false } },
-    { h = -260 }, { event = { 'invisUI', true } },
-    { h = -280 }, { event = { 'invisUI', false } },
+    { h = -250 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -10m' } },
+    { h = -260 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -20m' } },
+    { h = -280 }, { event = { 'invisUI', false, 'needAlert', 'UI has returned' } },
 
     -- B4: The Bunker
-    { h = -300 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5 } },
+    { h = -300 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B4:   -1s Timer   -0.5s Cycle   -10% Atk   -10% Clock' } },
     { event = { 'attackMul', -.1, 'timerMul', -.1 } },
     { h = -310 },
-    { text = 'b4.begin' },
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
-    { h = -320 }, { text = 'b4.effStart', event = { 'glassCard', true } },
+    { text = 'b4.begin' }, {event = {'needAlert', 'Your slowness was forgiven... (FaultDmg lowered to 2)'}},
+    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2)  end }, 
+    { h = -320 }, { text = 'b4.effStart', event = { 'glassCard', true, 'needAlert', '+Glass' } },
     { h = -380 },
-    { text = 'b4.noMS', color = 'lB', cond = function() return GAME.mod.MS == 0 end },
+    { text = 'b4.noMS', color = 'lB', cond = function() return GAME.mod.MS == 0 end, event = {'needAlert', 'No fortune... nothing happened.'} },
     {
         text = 'b4.MSoff',
         color = 'lO',
         cond = function() return GAME.mod.MS > 0 end,
         event = function()
+            GAME.needAlert = "Your MESSINESS was converted...   -10% Atk   +1% Timer   -" .. GAME.mod.MS * 0.2 .. " QuestCards"
             GAME.extraQuestBase = GAME.extraQuestBase - GAME.mod.MS * .2
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
@@ -922,24 +928,26 @@ NegEvents = {
     { h = -450 }, { event = { 'glassCard', false } },
 
     -- B5: The Infirmary
-    { h = -450 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5 } },
+    { h = -450 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B5:   -Glass   -1s Timer   -0.5s Cycle   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
     { event = { 'attackMul', -.1 } },
     { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
     { h = -460 }, { text = 'b5.begin' },
     { h = -470 }, { text = 'b5.effStart' },
     {
         event = function()
+            GAME.needAlert = "+Slowmo"
             GAME.slowmo = true
             RefreshBGM()
         end
     },
     { h = -550 },
-    { text = 'b5.noDH', color = 'lB', cond = function() return GAME.mod.DH == 0 end },
+    { text = 'b5.noDH', color = 'lB', cond = function() return GAME.mod.DH == 0 end, event = {'needAlert', 'No evil... nothing happened.'} },
     {
         text = 'b5.DHoff',
         color = 'lO',
         cond = function() return GAME.mod.DH > 0 end,
         event = function()
+            GAME.needAlert = "Your DOUBLE HOLE was converted...   -10% Atk   +1% Timer   -" .. GAME.mod.DH * 0.2 .. " QuestVariance"
             GAME.extraQuestVar = GAME.extraQuestVar - GAME.mod.DH * .2
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
@@ -956,19 +964,21 @@ NegEvents = {
         end
     },
 
+    {event = {'needAlert', 'B6:   -Slowmo   -1s Timer   +1 TimeDmg   +1 MaxQuestSize   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)'}},
     -- B6: Decayed Catacombs
     { h = -650 }, { event = { 'dmgDelay', -1, 'dmgTime', 1, 'maxQuestSize', 1 } },
     { event = { 'attackMul', -.1 } },
     { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
     { h = -660 }, { text = 'b6.begin' },
-    { h = -670 }, { text = 'b6.effStart', event = { 'invisCard', true } },
+    { h = -670 }, { text = 'b6.effStart', event = { 'invisCard', true, 'needAlert', '+Invis' } },
     { h = -720 },
-    { text = 'b6.noNH', color = 'lB', cond = function() return GAME.mod.NH == 0 end },
+    { text = 'b6.noNH', color = 'lB', cond = function() return GAME.mod.NH == 0 end, event = {'needAlert', 'No temperance... nothing happened.'} },
     {
         text = 'b6.NHoff',
         color = 'lO',
         cond = function() return GAME.mod.NH > 0 end,
         event = function()
+            GAME.needAlert = "Your NO-HOLD was converted...   -10% Atk   +1% Timer   +" .. GAME.mod.NH * 3 .. " Heal"
             GAME.dmgHeal = GAME.dmgHeal + GAME.mod.NH * 3
             GAME.attackMul = GAME.attackMul - .1
             GAME.dmgTimerMul = GAME.dmgTimerMul + .01
@@ -982,7 +992,7 @@ NegEvents = {
     { h = -850 }, { event = { 'invisCard', false } },
 
     -- B7: Sacreligious Ruins
-    { h = -850 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5 } },
+    { h = -850 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B7:   -Invis   -1s Timer   -0.5s Cycle   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
     { event = { 'attackMul', -.1 } },
     { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
     { h = -860 }, { text = 'b7.begin' },
@@ -990,7 +1000,7 @@ NegEvents = {
     { h = -950 }, { text = 'b7.mid' },
 
     -- B8: Singularity Reactor
-    { h = -1100 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5 } },
+    { h = -1100 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B8:   -1s Timer   -0.5s Cycle\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
     { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
     { h = -1115 }, { text = 'b8.begin' },
     { h = -1145 }, { text = 'b8.mid1', color = 'R', size = 1.26, sfx = 'b2bcharge_distance_3', duration = 1.26 },
@@ -1005,6 +1015,7 @@ NegEvents = {
     { h = -1200 },
     {
         event = function()
+            GAME.needAlert = "+Nightcore!"
             GAME.nightcore = true
             RefreshBGM()
         end
@@ -1020,7 +1031,7 @@ NegEvents = {
 
 
     -- B9: Distorted Gateways
-    { h = -1350 }, { event = { 'dmgDelay', -.5 } },
+    { h = -1350 }, { event = { 'dmgDelay', -.5, 'needAlert', 'B9:   -Nightcore   -0.5s Timer' } },
     { h = -1360 }, { text = 'b9.begin' },
     { event = function() GAME.rankLimit = math.min(GAME.rankLimit, 10) end },
     {
@@ -1029,6 +1040,7 @@ NegEvents = {
         size = 2.6,
         duration = 16,
         event = function()
+            GAME.needAlert = 'Max CSP lowered to 10    Time raised to 6:59'
             GAME.time = math.max(GAME.time, 419)
         end
     },
@@ -1037,6 +1049,7 @@ NegEvents = {
     { h = -1650 },
     {
         event = function()
+            GAME.needAlert = "Time seems to stop existing...\n+Immortal    +Invis"
             GAME.invincible = true
             GAME.timerMul = 0
             GAME.dmgWrong = 1
@@ -1071,6 +1084,7 @@ NegEvents = {
     { h = -1800 },
     {
         event = function()
+            GAME.needAlert = "You join the Void..."
             GAME.heightBonus = 0
             GAME.height = -1800
             FloatOnCard = nil

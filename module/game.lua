@@ -115,6 +115,11 @@ local ins, rem = table.insert, table.remove
 ---@field DPlock boolean
 ---@field lastFlip number | false
 local GAME = {
+    -- Unabstracted:
+    needAlert = nil, 
+
+
+
     forfeitTimer = 0,
     exTimer = 0,
     anyRev = false,
@@ -945,6 +950,19 @@ function GAME.showFloorText(f, name, duration)
     }
 end
 
+function GAME.textAlert(label)
+    if label then
+        TEXT:add {
+            text = label,
+            x = 800, y = 400, fontSize = 30,
+            style = 'score', duration = 5,
+            inPoint = .26, outPoint = .1,
+            color = 'lM',
+        }
+        SFX.play("maintenance", 1, 0, -6)
+    end
+end
+
 function GAME.upFloor()
     local roundFloorTime = roundUnit(GAME.floorTime, .001)
     if GAME.floor == 1 then
@@ -1000,6 +1018,7 @@ function GAME.upFloor()
             GAME[e[i]] = e[i + 1]
         end
     end
+    GAME.textAlert(F.text)
     if GAME.dmgTimer > GAME.dmgDelay then GAME.dmgTimer = GAME.dmgDelay end
 
     -- Text & SFX
@@ -2064,7 +2083,7 @@ function GAME.start()
     MusicPlayer = false
 
 
-
+    GAME.needAlert = nil
     GAME.omega = false
     GAME.negFloor = 1
     GAME.negEvent = 1
@@ -2247,6 +2266,8 @@ end
 
 ---@param reason 'forfeit' | 'wrong' | 'time'
 function GAME.finish(reason)
+    GAME.needAlert = nil
+
     SCN.scenes.tower.widgetList.help:setVisible(not GAME.zenithTraveler)
     SCN.scenes.tower.widgetList.help2:setVisible(not GAME.zenithTraveler)
     SCN.scenes.tower.widgetList.daily:setVisible(not GAME.zenithTraveler)
@@ -2786,6 +2807,13 @@ function GAME.update(dt)
             GAME.time = GAME.time + dt * 62
         end
     end
+
+    -- Unabstracted
+    if GAME.needAlert then
+        GAME.textAlert(GAME.needAlert)
+        GAME.needAlert = nil
+    end
+
 
     -- Quest animattion
     local style = M.DP == 0 and questStyle or questStyleDP

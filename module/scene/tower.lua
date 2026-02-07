@@ -695,6 +695,7 @@ function drawUnabstracted()
     gc_setColor(TextColor)
     gc_setAlpha(0.7)
     gc_replaceTransform(SCR.xOy_ul)
+    gc_setLineWidth(3)
 
     if GAME.playing then
         gc_draw(TEXTS.zcu_questBuffer, 1450, 200, 0, 0.8, 0.8)
