@@ -1107,9 +1107,9 @@ function GAME.nextFatigue()
             }
         end
         TASK.new(GAME.task_fatigueWarn)
-        if not GAME.achv_level19capH then
-            GAME.achv_level19capH = GAME.roundHeight
-        end
+    end
+    if stage.first then
+        GAME.achv_level19capH = GAME.roundHeight
     end
     if stage.final then
         if GAME.fatigueSet == Fatigue.normal then

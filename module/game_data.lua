@@ -1114,7 +1114,7 @@ Fatigue = {
         { time = 90,  event = { 'extraQuestBase', .2, 'animDuration', .5 },                 text = "",                          desc = "+0.2 QuestCards   +50% Slowness" },
         { time = 180, event = { 'extraQuestBase', .2, 'animDuration', .5 },                 text = "",                          desc = "+0.2 QuestCards   +50% Slowness" },
         { time = 240, event = { 'extraQuestBase', .2, 'animDuration', 1 },                  text = "",                          desc = "+0.2 QuestCards   +100% Slowness" },
-        { time = 300, event = { 'dmgTimerMul', -.1, 'animDuration', 1 },                    text = "FATIGUE SETS IN_",          desc = "-10% Timer   +100% Slowness" },
+        { time = 300, event = { 'dmgTimerMul', -.1, 'animDuration', 1 },                    text = "FATIGUE SETS IN_",          desc = "-10% Timer   +100% Slowness", first = true },
         { time = 330, event = { 'dmgCycle', -.5, 'dmgWrong', 1 },                           text = "YOUR BODY GROWS WEAK_",     desc = "-0.5s DmgCycle   +1 FaultDmg" },
         { time = 360, event = { 'dmgTimerMul', -.1, 'dmgHeal', -1, 'animDuration', 1 },     text = "ALL SENSES BLUR TOGETHER_", desc = "-10% Timer   -1 Heal   +100% Slowness" },
         { time = 390, event = { 'dmgTimerMul', -.1, 'dmgWrong', 1 },                        text = "YOUR CONSCIOUSNESS FADES_", desc = "-10% Timer   +1 FaultDmg" },
@@ -1135,7 +1135,7 @@ Fatigue = {
         { time = 90,  event = { 'extraQuestBase', .2, 'animDuration', .5 },             text = "",                                  desc = "+0.2 QuestCards   +50% Slowness" },
         { time = 180, event = { 'extraQuestBase', .2, 'animDuration', .5 },             text = "",                                  desc = "+0.2 QuestCards   +50% Slowness" },
         { time = 240, event = { 'extraQuestBase', .2, 'animDuration', 1 }},             -- Merged with below
-        { time = 240, event = { 'dmgTimerMul', -.2 },                                   text = "YOUR POWER SLIPS_",                 desc = "-20% Timer   +0.2 QuestCards   +100% Slowness" },
+        { time = 240, event = { 'dmgTimerMul', -.2 },                                   text = "YOUR POWER SLIPS_",                 desc = "-20% Timer   +0.2 QuestCards   +100% Slowness", first = true },
         { time = 270, event = { 'dmgWrong', 2 },                                        text = "WHISPERS OF DISCONTENT SPREAD_",    desc = "+2 FaultDmg" },
         { time = 300, event = { 'dmgCycle', -1, 'animDuration', 1 },                    text = "PROTESTERS LINE THE STREETS_",      desc = "-1s DmgCycle   +100% Slowness" },
         { time = 330, event = { 'dmgTimerMul', -.2, 'dmgWrong', 2 },                    text = "YOUR CLOSEST ALLIES DEFECT_",       desc = "-20% Timer   +2 FaultDmg" },
@@ -1153,7 +1153,7 @@ Fatigue = {
     },
     rDP = {
         { time = 5,   event = {},   text = "[ZCU] CONTEXT:", desc = "Healing starts at 3" },
-        { time = 20,  event = { 'dmgHeal', -1 }, --[[ 2 ]]                       text = "YOUR PASSION FADES_",                        desc = "-1 Heal",          duration = 10 },
+        { time = 20,  event = { 'dmgHeal', -1 }, --[[ 2 ]]                       text = "YOUR PASSION FADES_",                        desc = "-1 Heal", first = true, duration = 10 },
         { time = 40,  event = { 'dmgHeal', -.5 }, --[[ 1.5 ]]                    text = "THEIR REPLIES BECOME LESS ENGAGED_",         desc = "-0.5 Heal",         duration = 10 },
         { time = 60,  event = { 'dmgHeal', -.5, 'animDuration', .5 }, --[[ 1 ]]  text = "YOU FEEL NEGLECTED_",                        desc = "-0.5 Heal",        duration = 10 },
         { time = 80,  event = { 'dmgHeal', 1 }, --[[ 2 ]]                        text = "THEY SUCCESSFULLY APOLOGIZE_?",              desc = "+1 Heal",          duration = 10, color = 'lO' },
