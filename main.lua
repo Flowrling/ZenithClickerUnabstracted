@@ -1,6 +1,6 @@
 love.window.setIcon(love.image.newImageData('assets/icon.png'))
 
-require 'Zenitha'
+require 'module/Zenitha'
 
 ZENITHA.setMainLoopSpeed(240)
 ZENITHA.setRenderRate(50)
