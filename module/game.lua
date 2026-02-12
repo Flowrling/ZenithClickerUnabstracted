@@ -114,10 +114,13 @@ local ins, rem = table.insert, table.remove
 ---@field currentTask ReviveTask |false
 ---@field DPlock boolean
 ---@field lastFlip number | false
+---
+---@field needAlert string | false
+---@field realTime number
 local GAME = {
     -- Unabstracted:
     needAlert = nil, 
-
+    realTime = 0,
 
 
     forfeitTimer = 0,
@@ -2082,8 +2085,10 @@ function GAME.start()
     TASK.removeTask_code(Task_MusicEnd)
     MusicPlayer = false
 
-
+    -- ZCU
     GAME.needAlert = nil
+    GAME.realTime = 0
+
     GAME.omega = false
     GAME.negFloor = 1
     GAME.negEvent = 1
@@ -2507,7 +2512,8 @@ function GAME.finish(reason)
         local g = GAME
         TEXTS.endResult:set({
             COLOR.L, ("Time  %s"):format(STRING.time_simp(g.time)),
-            COLOR.LD, g.gigaTime and ("  (F10 at %s)\n"):format(STRING.time_simp(g.gigaTime)) or "\n",
+            COLOR.LD, g.gigaTime and ("  (F10 at %s)"):format(STRING.time_simp(g.gigaTime)) or "",
+            COLOR.LD, ("  (Real  %s)\n"):format(STRING.time_simp(g.realTime)),
             COLOR.L, ("Flip  %d"):format(g.totalFlip),
             COLOR.LD, ("  (%.2f/s)\n"):format(g.totalFlip / g.time),
             COLOR.L, ("Quest  %d"):format(g.totalQuest),

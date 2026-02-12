@@ -9,11 +9,12 @@ Zenith Clicker Unabstracted still has many features it has planned, but aren't p
 - Damage/heal values
 - Attack values
 - Live stats (flips/quests/qps/etc, from results)
+- ~~Real time~~
 
 ## Low priority
-- Clock speed
+- ~~Clock speed~~
 - Slowness level (animation length)
-- Timer speed displaying "infinite" correctly
+- ~~Timer speed displaying "infinite" correctly~~
 - Surge cap
 
 # Out-of-game ambiguities

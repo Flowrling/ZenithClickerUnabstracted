@@ -422,6 +422,9 @@ function scene.update(dt)
         if kbIsDown('down') then MY = MY + spd end
         ZENITHA.setCursorPos(MX, MY)
     end
+
+    GAME.realTime = GAME.realTime + dt -- ZCU, needs unmodified time
+
     if GAME.nightcore then dt = dt * 2.6 end
     if GAME.zenithTraveler and M.EX == 2 then
         local f = GAME.calculateFloor(GAME.bgH)
@@ -697,43 +700,6 @@ function drawUnabstracted()
     gc_replaceTransform(SCR.xOy_ul)
     gc_setLineWidth(3)
 
-    if GAME.playing then
-        gc_draw(TEXTS.zcu_questBuffer, 1450, 200, 0, 0.8, 0.8)
-        
-
-        local effectiveTimerMul = GAME.dmgTimerMul / (GAME.nightcore and 2.6 or 1)
-        TEXTS.zcu_timer:set(string.format(
-            "%.1fs / %.1fs (x%.2f, effective %.2fs)\nCycle: %.1fs (effective %.2fs)", 
-            GAME.dmgTimer, 
-            GAME.dmgDelay, 
-            effectiveTimerMul, 
-            GAME.dmgDelay*effectiveTimerMul,
-            GAME.dmgCycle,
-            GAME.dmgCycle*effectiveTimerMul 
-        ))
-        if effectiveTimerMul and effectiveTimerMul > 999 then
-            TEXTS.zcu_timer:set(string.format(
-                "%.1fs / %.1fs (effective inf)\nCycle: %.1fs (effective inf)", 
-                GAME.dmgTimer, 
-                GAME.dmgDelay, 
-                GAME.dmgCycle
-            ))
-        end
-
-        gc_draw(TEXTS.zcu_timer, 100, 320, 0, 0.7, 0.7)
-
-        
-
-
-        -- TODO Time mult: 1000 100 with BL origin?
-
-        -- TODO Slowness text
-        
-        -- TODO various forms of damage (fault is most interesting)
-
-        -- TODO quest difficulty variables
-    end
-
     if STAT.showGrid then
         debugPosText = GC.newText(FONT.get(30))
         for i=-10, 20 do
@@ -748,6 +714,55 @@ function drawUnabstracted()
             gc_draw(debugPosText, 0, linePos, 0, 0.5, 0.5)
         end
     end
+
+
+    if GAME.playing then
+        gc_draw(TEXTS.zcu_questBuffer, 1450, 200, 0, 0.8, 0.8)
+        
+
+        local effectiveTimerMul = GAME.dmgTimerMul / (GAME.nightcore and 2.6 or 1)
+        
+        if effectiveTimerMul and effectiveTimerMul > 999 then
+            TEXTS.zcu_timer:set(string.format(
+                "%.1fs / %.1fs (stopped)\nCycle: %.1fs (stopped)", 
+                GAME.dmgTimer, 
+                GAME.dmgDelay, 
+                GAME.dmgCycle
+            ))
+        else 
+            TEXTS.zcu_timer:set(string.format(
+            "%.1fs / %.1fs (x%.2f, effective %.2fs)\nCycle: %.1fs (effective %.2fs)", 
+            GAME.dmgTimer, 
+            GAME.dmgDelay, 
+            effectiveTimerMul, 
+            GAME.dmgDelay*effectiveTimerMul,
+            GAME.dmgCycle,
+            GAME.dmgCycle*effectiveTimerMul 
+            ))
+        end
+        gc_draw(TEXTS.zcu_timer, 100, 320, 0, 0.7, 0.7)
+
+        local effectiveClockMul = GAME.timerMul * (GAME.nightcore and 2.6 or 1)
+        gc_setColor(COLOR.L)
+        TEXTS.zcu_timeMult:set(string.format(
+            "Clock speed x%.2f\nReal time: %.1fs",
+            effectiveClockMul,
+            GAME.realTime
+        ))
+        gc_draw(TEXTS.zcu_timeMult, 400, 1000, 0, 0.7, 0.7, TEXTS.zcu_timeMult:getWidth(),TEXTS.zcu_timeMult:getHeight())
+    
+
+
+        -- TODO Time mult: 1000 100 with BL origin?
+
+        -- TODO Slowness text
+        
+        -- TODO various forms of damage (fault is most interesting)
+
+        -- TODO quest difficulty variables
+    end
+
+    
     
 
 
