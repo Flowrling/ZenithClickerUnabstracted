@@ -711,6 +711,15 @@ function drawUnabstracted()
             GAME.dmgCycle,
             GAME.dmgCycle*effectiveTimerMul 
         ))
+        if effectiveTimerMul and effectiveTimerMul > 999 then
+            TEXTS.zcu_timer:set(string.format(
+                "%.1fs / %.1fs (effective inf)\nCycle: %.1fs (effective inf)", 
+                GAME.dmgTimer, 
+                GAME.dmgDelay, 
+                GAME.dmgCycle
+            ))
+        end
+
         gc_draw(TEXTS.zcu_timer, 100, 320, 0, 0.7, 0.7)
 
         
