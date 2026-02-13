@@ -36,7 +36,7 @@ addText("CLICKER", 80, 95)
 
 addSection(220)
 
-addSection(350)
+addSection(360)
 
 -- THE TEAM
 
@@ -147,11 +147,11 @@ function scene.load()
     end
     local text
     if devCommentary[cID] then
-        if BEST.highScore[setStr] < Floors[9].top then
-            text = devCommentary.notFinished
-        else
+        --if BEST.highScore[setStr] < Floors[9].top then
+        --    text = devCommentary.notFinished
+        --else
             text = devCommentary[cID]
-        end
+        --end
     else
         text = devCommentary.noComment
     end
@@ -219,7 +219,7 @@ function scene.draw()
     if GAME.anyRev then ky = -ky end
     gc_mDraw(icon, -170, 100, 0, kx, ky)
     gc_draw(AboutText)
-    gc_draw(DevNoteText, 0, 285 - DevNoteText:getHeight() * (.68 / 2), 0, .68, .68, 1000, 0)
+    gc_draw(DevNoteText, 0, 290 - DevNoteText:getHeight() * (.68 / 2), 0, .68, .68, 1000, 0)
 
     gc_setColor(1, 1, 1, .2)
     gc_setLineWidth(0.5)

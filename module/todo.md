@@ -19,7 +19,7 @@ Zenith Clicker Unabstracted still has many features it has planned, but aren't p
 
 # Out-of-game ambiguities
 
-- "YOU DID A THING!" displaying exact badge
+- ~~"YOU DID A THING!" displaying exact badge~~
 
 # Other
 
