@@ -1308,6 +1308,29 @@ RevivePrompts = {
 }
 for i = 1, #RevivePrompts do RevivePrompts[i]._prompt = RevivePrompts[i].prompt end
 
+BadgeThings = {
+    champion =              "You're a CLICKER CHAMPION!!",
+    mastery_1 =             "You've attained MASTERY!",
+    speedrun_1 =            "You're a SPEEDRUNNER!",
+    mastery_2 =             "You've attained SUBJUGATION!",
+    speedrun_2 =            "You've attained OMNIPOTENCE!",
+    subluminal =            "You went SUBLUMINAL!",
+    superluminal =          "You went SUPERLUMINAL!!",
+    fomg =                  "You went INTERSTELLAR!",
+    fepsilon =              "You went INTERGALACTIC!!",
+    true_expert =           "You're a TRUE EXPERT!",
+    true_strength =         "You have TRUE STRENGTH!",
+    true_master =           "You're a TRUE MASTER!",
+    true_couple =           "You're a TRUE COUPLE!",
+    true_invis =            "You mastered TRUE INVISIBILITY!",
+    universal_gravitation = "You experienced UNIVERAL GRAVITATION!!",
+    rDP_meta =              "You're a MECHANICAL HEARTBREAKER!",
+    sc_cap =                "You tripped the SURGE PROTECTOR!",
+    exceed_dev_half =       "You're fit for an APPRENTICE!",
+    exceed_dev =            "You're fit for a SUCCESSOR!!",
+}
+
+
 BadgeData = {
     [0] = {
         prio = 1e99,

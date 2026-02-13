@@ -759,17 +759,17 @@ end
 function IssueSecret(id, silent)
     if not STAT.badge[id] then
         STAT.badge[id] = true
-        if not silent then
-            table.insert(bufferedMsg, { 'bright', "YOU DID A THING!\n", 0 })
+        --if not silent then
+            table.insert(bufferedMsg, { 'bright', (BadgeThings[id] or "You attained a BADGE!") .. " (YOU DID A THING!)\n", 0 })
             if not GAME.playing then
                 ReleaseAchvBuffer()
             end
-        end
+        --end
     end
 end
 
 function ReleaseAchvBuffer()
-    if TestMode then return end
+    --if TestMode then return end
     for i = 1, #bufferedMsg do
         local msg = bufferedMsg[i]
         msgTime = TASK.lock('achv_bulk', 1) and 6.2 or msgTime + 2.6
