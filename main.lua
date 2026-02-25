@@ -499,6 +499,7 @@ TEXTS = { -- Font size can only be 30 and 50 here !!!
     zcu_questDiff   = GC.newText(FONT.get(30)),
     zcu_health      = GC.newText(FONT.get(30)),
     zcu_health_p2   = GC.newText(FONT.get(30)),
+    zcu_gravResets  = GC.newText(FONT.get(30)),
 
     -- Vanilla texts
     version    = GC.newText(FONT.get(30)),

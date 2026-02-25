@@ -750,6 +750,12 @@ function drawUnabstracted()
             GAME.realTime
         ))
         gc_draw(TEXTS.zcu_timeMult, 400, 1000, 0, 0.7, 0.7, TEXTS.zcu_timeMult:getWidth(),TEXTS.zcu_timeMult:getHeight())
+
+        gc_setColor(COLOR.B)
+        if M.GV and not URM and GAME.achv_resetCount then
+            
+
+        end
     
 
 
@@ -930,8 +936,8 @@ function scene.draw()
     end
 end
 
-local gvTimerColor1 = { 1, .942, .872, 0 }
-local gvTimerColor2 = { 0, 0, 0, 0 }
+local gvTimerColor1 = { 1, .942, .872, 1 }
+local gvTimerColor2 = { 0, 0, 0, 1 }
 local altitudeText = { 0, COLOR.dL, "m" }
 function scene.overDraw()
     local t = love.timer.getTime()
@@ -1156,12 +1162,18 @@ function scene.overDraw()
                 end
                 gc_setColor(COLOR.LD)
                 gc_circle('line', 0, 0, 40)
-                if GAME.gravTimer and GAME.gravTimer < 4.2 then
-                    setFont(30)
-                    gvTimerColor1[4] = clampInterpolate(clamp(GAME.gravDelay, 2.6, 4.2), 0, min(GAME.gravDelay - .626, 2.6), 1, GAME.gravTimer)
-                    gvTimerColor2[4] = gvTimerColor1[4]
+
+                setFont(30)
+                if GAME.gravTimer then
                     gc_strokePrint('full', 1, gvTimerColor1, gvTimerColor2, ("%.1f"):format(GAME.gravTimer + .05), 0, -21, nil, 'center')
+                elseif GAME.questTime then
+                    gc_strokePrint('full', 1, gvTimerColor1, gvTimerColor2, ("%.1f"):format(GAME.gravDelay + 2.65 - GAME.questTime), 0, -21, nil, 'center')
                 end
+                if GAME.achv_resetCount then
+                    gc_setColor(GAME.achv_resetCount >= 15 and COLOR.R or COLOR.B)
+                    gc_draw(TEXTS.zcu_gravResets, 0, 10, 0, 0.65, 0.65, TEXTS.zcu_gravResets:getWidth()/2)
+                end
+                
                 gc_pop()
             end
 

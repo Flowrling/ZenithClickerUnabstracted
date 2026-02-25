@@ -660,6 +660,7 @@ function GAME.genQuest()
     GAME.dmgWrongExtra = 0
     GAME.gravTimer = false
     GAME.achv_resetCount = 0
+    TEXTS.zcu_gravResets:set(15)
     for _, C in ipairs(CD) do C.touchCount, C.required, C.required2 = 0, false, false end
     for _, v in next, GAME.quests[1].combo do CD[v].required = true end
     if M.DP > 0 and GAME.quests[2] then for _, v in next, GAME.quests[2].combo do CD[v].required2 = true end end
@@ -1566,6 +1567,7 @@ function GAME.task_cancelAll(instant)
             GAME.achv_noResetH = GAME.roundHeight
         end
         GAME.achv_resetCount = GAME.achv_resetCount + 1
+        TEXTS.zcu_gravResets:set(max(15-GAME.achv_resetCount,0))
         -- if GAME.achv_totalResetCount == 0 then
         --     if GAME.comboStr == 'ASDHNHVL' then
         --         SubmitAchv('minimalism', GAME.achv_maxChain)
