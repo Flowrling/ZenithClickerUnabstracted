@@ -1169,7 +1169,7 @@ function scene.overDraw()
                 elseif GAME.questTime then
                     gc_strokePrint('full', 1, gvTimerColor1, gvTimerColor2, ("%.1f"):format(GAME.gravDelay + 2.65 - GAME.questTime), 0, -21, nil, 'center')
                 end
-                if GAME.achv_resetCount then
+                if GAME.achv_resetCount and not URM then
                     gc_setColor(GAME.achv_resetCount >= 15 and COLOR.R or COLOR.B)
                     gc_draw(TEXTS.zcu_gravResets, 0, 10, 0, 0.65, 0.65, TEXTS.zcu_gravResets:getWidth()/2)
                 end
