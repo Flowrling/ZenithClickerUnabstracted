@@ -1,9 +1,3 @@
----------------------------------------------------------------------
---                      SPOILER WARNING                            --
--- This file contains secrets that may spoil your game experience. --
--- Be sure you've finished the game, including Ultra Reversed Mods --
---                   Read at your own risk.                        --
----------------------------------------------------------------------
 
 -- Unabstracted below
 
@@ -819,7 +813,7 @@ NegEvents = {
     {
         text = 'b2.effStart',
         event = function()
-            GAME.needAlert = "+Nightcore"
+            if not GAME.nightcore then GAME.needAlert = "+Nightcore" else GAME.needAlert = "(You already had Nightcore)" end
             GAME.nightcore = true
             RefreshBGM()
         end
@@ -867,11 +861,16 @@ NegEvents = {
 
 
     -- B3: Underground Parking
-    { h = -150 }, { event = { 'dmgDelay', -2, 'dmgCycle', -.5, 'needAlert', 'B3:   -Nightcore   -10% Atk   -15% Clock' } },
+    { h = -150 }, { event = { 'dmgDelay', -2, 'dmgCycle', -.5, 'needAlert', 'B3:   -Nightcore   -2s Timer   -0.5s Cycle   -10% Atk   -15% Clock' } },
     { event = { 'attackMul', -.1, 'timerMul', -.15 } },
     { h = -155 }, { text = 'b3.begin' },
     { h = -160 }, { text = 'b3.effStart' },
-    { h = -165 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -5m' } },
+    { h = -165 }, { 
+                    event = function()
+                        if not GAME.invisUI then GAME.needAlert = "UI returning in -5m" else GAME.needAlert = "(You already had Invis UI)" end
+                        GAME.invisUI = true
+                    end,
+                },
     { h = -170 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -5m' } },
     { h = -175 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -10m' } },
     { h = -180 }, { text = 'b3.mid1' },
@@ -894,7 +893,7 @@ NegEvents = {
             RefreshBGM()
         end,
     },
-    { h = -200 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -10m' } },
+    { h = -200 }, { event = { 'invisUI', false } },
     { h = -210 }, { event = { 'invisUI', true, 'needAlert', 'UI returning in -40m' } },
     { h = -220 }, { text = 'b3.mid2' },
     { h = -250 }, { event = { 'invisUI', false, 'needAlert', 'UI fading in -10m' } },
@@ -905,9 +904,16 @@ NegEvents = {
     { h = -300 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B4:   -1s Timer   -0.5s Cycle   -10% Atk   -10% Clock' } },
     { event = { 'attackMul', -.1, 'timerMul', -.1 } },
     { h = -310 },
-    { text = 'b4.begin' }, {event = {'needAlert', 'Your slowness was forgiven... (FaultDmg lowered to 2)'}},
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2)  end }, 
-    { h = -320 }, { text = 'b4.effStart', event = { 'glassCard', true, 'needAlert', '+Glass' } },
+    { text = 'b4.begin' },
+    { event = function() 
+        if GAME.dmgWrong > 2 then GAME.needAlert = GAME.needAlert .. "\nYour slowness was forgiven... (FaultDmg lowered to 2)" end
+        GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end
+     },    
+     { h = -320 }, { text = 'b4.effStart', 
+        event = function()
+            if not GAME.glassCard then GAME.needAlert = "+Glass" else GAME.needAlert = "(You already had Glass)" end
+            GAME.glassCard = true
+        end, },
     { h = -380 },
     { text = 'b4.noMS', color = 'lB', cond = function() return GAME.mod.MS == 0 end, event = {'needAlert', 'No fortune... nothing happened.'} },
     {
@@ -928,14 +934,17 @@ NegEvents = {
     { h = -450 }, { event = { 'glassCard', false } },
 
     -- B5: The Infirmary
-    { h = -450 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B5:   -Glass   -1s Timer   -0.5s Cycle   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
+    { h = -450 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B5:   -Glass   -1s Timer   -0.5s Cycle   -10% Atk' } },
     { event = { 'attackMul', -.1 } },
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
+    { event = function() 
+        if GAME.dmgWrong > 2 then GAME.needAlert = GAME.needAlert .. "\nYour slowness was forgiven... (FaultDmg lowered to 2)" end
+        GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end
+     },  
     { h = -460 }, { text = 'b5.begin' },
     { h = -470 }, { text = 'b5.effStart' },
     {
         event = function()
-            GAME.needAlert = "+Slowmo"
+            if not GAME.slowmo then GAME.needAlert = "+Slowmo" else GAME.needAlert = "(You already had Slowmo)" end
             GAME.slowmo = true
             RefreshBGM()
         end
@@ -964,13 +973,20 @@ NegEvents = {
         end
     },
 
-    {event = {'needAlert', 'B6:   -Slowmo   -1s Timer   +1 TimeDmg   +1 MaxQuestSize   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)'}},
+    {event = {'needAlert', 'B6:   -Slowmo   -1s Timer   +1 TimeDmg   +1 MaxQuestSize   -10% Atk'}},
     -- B6: Decayed Catacombs
     { h = -650 }, { event = { 'dmgDelay', -1, 'dmgTime', 1, 'maxQuestSize', 1 } },
     { event = { 'attackMul', -.1 } },
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
+    { event = function() 
+        if GAME.dmgWrong > 2 then GAME.needAlert = GAME.needAlert .. "\nYour slowness was forgiven... (FaultDmg lowered to 2)" end
+        GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end
+     },  
     { h = -660 }, { text = 'b6.begin' },
-    { h = -670 }, { text = 'b6.effStart', event = { 'invisCard', true, 'needAlert', '+Invis' } },
+    { h = -670 }, { text = 'b6.effStart', 
+        event = function()
+            if not GAME.invisCard then GAME.needAlert = "+Invis" else GAME.needAlert = "(You already had Invis Cards)" end
+            GAME.invisCard = true
+        end, },
     { h = -720 },
     { text = 'b6.noNH', color = 'lB', cond = function() return GAME.mod.NH == 0 end, event = {'needAlert', 'No temperance... nothing happened.'} },
     {
@@ -992,16 +1008,22 @@ NegEvents = {
     { h = -850 }, { event = { 'invisCard', false } },
 
     -- B7: Sacreligious Ruins
-    { h = -850 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B7:   -Invis   -1s Timer   -0.5s Cycle   -10% Atk\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
+    { h = -850 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B7:   -Invis   -1s Timer   -0.5s Cycle   -10% Atk' } },
     { event = { 'attackMul', -.1 } },
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
+    { event = function() 
+        if GAME.dmgWrong > 2 then GAME.needAlert = GAME.needAlert .. "\nYour slowness was forgiven... (FaultDmg lowered to 2)" end
+        GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end
+     },  
     { h = -860 }, { text = 'b7.begin' },
     { h = -900 }, { text = 'b7.effStart' },
     { h = -950 }, { text = 'b7.mid' },
 
     -- B8: Singularity Reactor
-    { h = -1100 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B8:   -1s Timer   -0.5s Cycle\nYour slowness was forgiven... (FaultDmg lowered to 2)' } },
-    { event = function() GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end },
+    { h = -1100 }, { event = { 'dmgDelay', -1, 'dmgCycle', -.5, 'needAlert', 'B8:   -1s Timer   -0.5s Cycle' } },
+    { event = function() 
+        if GAME.dmgWrong > 2 then GAME.needAlert = GAME.needAlert .. "\nYour slowness was forgiven... (FaultDmg lowered to 2)" end
+        GAME.dmgWrong = math.min(GAME.dmgWrong, 2) end
+     },  
     { h = -1115 }, { text = 'b8.begin' },
     { h = -1145 }, { text = 'b8.mid1', color = 'R', size = 1.26, sfx = 'b2bcharge_distance_3', duration = 1.26 },
     { h = -1160 }, { text = 'b8.mid2', color = 'R', size = 1.26, sfx = 'b2bcharge_distance_3', duration = 1.26 },
@@ -1015,7 +1037,7 @@ NegEvents = {
     { h = -1200 },
     {
         event = function()
-            GAME.needAlert = "+Nightcore!"
+            GAME.needAlert = "+Nightcore!!"
             GAME.nightcore = true
             RefreshBGM()
         end
@@ -1033,14 +1055,16 @@ NegEvents = {
     -- B9: Distorted Gateways
     { h = -1350 }, { event = { 'dmgDelay', -.5, 'needAlert', 'B9:   -Nightcore   -0.5s Timer' } },
     { h = -1360 }, { text = 'b9.begin' },
-    { event = function() GAME.rankLimit = math.min(GAME.rankLimit, 10) end },
     {
         text = 'b9.mid',
         color = 'lR',
         size = 2.6,
         duration = 16,
         event = function()
-            GAME.needAlert = 'Max CSP lowered to 10    Time raised to 6:59'
+            GAME.needAlert = ""
+            if GAME.rankLimit > 10 then GAME.needAlert = GAME.needAlert .. "  Max CSP lowered to 10  " end
+            if GAME.time     < 419 then GAME.needAlert = GAME.needAlert .. "  Time raised to 6:59  " end
+            GAME.rankLimit = math.min(GAME.rankLimit, 10)
             GAME.time = math.max(GAME.time, 419)
         end
     },

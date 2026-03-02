@@ -2086,7 +2086,6 @@ function GAME.start()
     if URM and M.VL == 2 and not UltraVlCheck('start') then return end
     TASK.removeTask_code(Task_MusicEnd)
     MusicPlayer = false
-
     -- ZCU
     GAME.needAlert = nil
     GAME.realTime = 0
@@ -2817,7 +2816,7 @@ function GAME.update(dt)
     end
 
     -- Unabstracted
-    if GAME.needAlert then
+    if GAME.needAlert and GAME.needAlert ~= "" then
         GAME.textAlert(GAME.needAlert)
         GAME.needAlert = nil
     end

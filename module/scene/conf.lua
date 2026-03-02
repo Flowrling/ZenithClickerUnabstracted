@@ -206,7 +206,7 @@ function scene.keyDown(key, isRep)
             wipingProgress = true
             MSG('dark', "Goodbye, friend... I'm sorry this file wasn't good eno")
             SFX.play('topout', 1)
-            ZENITHA._quit('fastfade')
+            ZENITHA._quit('fastFade')
         end
     
     elseif MusicPlayer then
