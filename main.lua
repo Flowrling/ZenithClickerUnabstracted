@@ -644,6 +644,8 @@ STAT = {
 
 ACHV = {}
 
+AchvRecent = {}
+
 AchvNotice = {}
 
 TestMode = false
@@ -723,8 +725,14 @@ local wreathName = {
     [5] = "T5-",
     [6] = "T3-",
 }
+
+function SubmitRecent(id, score)
+    AchvRecent[id] = score
+end
+
 ---@return true? success
 function SubmitAchv(id, score, silent, realSilent)
+    SubmitRecent(id, score)
     if TestMode then return end
     local A = Achievements[id]
     if not A then return end

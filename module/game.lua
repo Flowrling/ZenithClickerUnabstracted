@@ -2089,6 +2089,7 @@ function GAME.start()
     -- ZCU
     GAME.needAlert = nil
     GAME.realTime = 0
+    AchvRecent = {}
 
     GAME.omega = false
     GAME.negFloor = 1
@@ -2378,6 +2379,7 @@ function GAME.finish(reason)
             if GAME.floorTime <= 6.26 then
                 STAT.clockOutCount = STAT.clockOutCount + 1
                 SubmitAchv('clock_out', STAT.clockOutCount, true)
+                SubmitRecent('clock_out', 1)
             end
         end
 
@@ -2395,6 +2397,7 @@ function GAME.finish(reason)
                     STAT.dailyMastered = true
                     STAT.vipListCount = STAT.vipListCount + 1
                     SubmitAchv('vip_list', STAT.vipListCount)
+                    SubmitRecent('vip_list', 1)
                 end
                 if GAME.comboStr:count('r') >= 2 then
                     IssueAchv('its_kinda_rare')
@@ -2591,6 +2594,15 @@ function GAME.finish(reason)
         SubmitAchv('tower_climber', STAT.totalHeight, true, true)
         SubmitAchv('tower_regular', STAT.totalFloor, true, true)
         SubmitAchv('speed_player', STAT.totalGiga, true, true)
+
+        SubmitRecent('contender', 1)
+        SubmitRecent('clicker', GAME.totalFlip)
+        SubmitRecent('elegance', GAME.totalPerfect)
+        SubmitRecent('garbage_offensive', GAME.totalAttack)
+        SubmitRecent('tower_climber', abs(GAME.roundHeight))
+        SubmitRecent('tower_regular', GAME.floor)
+        SubmitRecent('speed_player', GAME.gigaCount + GAME.teraCount)
+
         _t = 0
         for id in next, MD.name do _t = _t + min(BEST.speedrun[id], 2600) end
         SubmitAchv('zenith_speedrunner', _t, true)
@@ -2603,6 +2615,27 @@ function GAME.finish(reason)
         _t = 0
         for id in next, MD.name do _t = _t + BEST.highScore['r' .. id] end
         SubmitAchv('divine_challenger', _t, true)
+
+        if #GAME.getHand() == 1 then
+            if GAME.anyRev then
+                SubmitRecent('divine_speedrunner', (2600*8) + (GAME.gigaTime or 2600))
+                SubmitRecent('divine_challenger', GAME.roundHeight)
+                SubmitRecent('zenith_speedrunner', (2600*9))
+                SubmitRecent('zenith_challenger', 0)
+
+            else
+                SubmitRecent('zenith_speedrunner', (2600*8) + (GAME.gigaTime or 2600))
+                SubmitRecent('zenith_challenger', GAME.roundHeight)
+                SubmitRecent('divine_speedrunner', (2600*9))
+                SubmitRecent('divine_challenger', 0)
+            end
+        else 
+            SubmitRecent('zenith_speedrunner', (2600*9))
+            SubmitRecent('zenith_challenger', 0)
+            SubmitRecent('divine_speedrunner', (2600*9))
+            SubmitRecent('divine_challenger', 0)
+        end
+
 
         SubmitAchv('multitasker', roundUnit(GAME.height * GAME.comboMP, .1))
         SubmitAchv('effective', zpGain)

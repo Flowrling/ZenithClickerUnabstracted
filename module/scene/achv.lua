@@ -15,6 +15,8 @@ AchvText = GC.newText(FONT.get(30))
 local Achievements = Achievements
 local M = GAME.mod
 
+local showRecent = false
+
 OverDevProgressText = "Open ACHV page to refresh the over-dev progress."
 
 ---@class EmptyAchv
@@ -61,6 +63,9 @@ function RefreshAchvList(canShuffle)
     overallProgress.ptGet = 0
     overallProgress.ptAll = 0
     TABLE.clear(achvList)
+
+    local WORKINGACHVS = showRecent and AchvRecent or ACHV
+
     local odCount, odCap = 0, 0
     for i = 1, #Achievements do
         local A = Achievements[i]
@@ -68,19 +73,19 @@ function RefreshAchvList(canShuffle)
             table.insert(achvList, { title = A.hide() and "???" or A.title and A.title:upper() })
         else
             local rank, score, progress, wreath, overDev
-            if TestMode or not ACHV[A.id] then
+            if TestMode or not WORKINGACHVS[A.id] then
                 score = "---"
             elseif not A.scoreFull then
-                score = { COLOR.LL, A.scoreSimp(ACHV[A.id]) }
+                score = { COLOR.LL, A.scoreSimp(WORKINGACHVS[A.id]) }
             else
-                score = { COLOR.LL, A.scoreSimp(ACHV[A.id]), COLOR.DL, "   " .. A.scoreFull(ACHV[A.id]) }
+                score = { COLOR.LL, A.scoreSimp(WORKINGACHVS[A.id]), COLOR.DL, "   " .. A.scoreFull(WORKINGACHVS[A.id]) }
             end
             if A.type == 'issued' then
-                rank = not TestMode and ACHV[A.id] and 6 or 0
+                rank = not TestMode and WORKINGACHVS[A.id] and 6 or 0
                 progress = 0
                 wreath = 0
             else
-                local selfScore = (not TestMode and ACHV[A.id]) or A.noScore or 0
+                local selfScore = (not TestMode and WORKINGACHVS[A.id]) or A.noScore or 0
                 local r = A.rank(selfScore)
                 rank = floor(r)
                 progress = r < 5 and r % 1 or r % 1 / .9999
@@ -98,7 +103,7 @@ function RefreshAchvList(canShuffle)
                 odCap = odCap + 1
             end
             AchvText:set(A.desc)
-            local hidden = A.hide() and not ACHV[A.id]
+            local hidden = A.hide() and not WORKINGACHVS[A.id]
             local descWidth = hidden and 26 or AchvText:getWidth()
             table.insert(achvList, {
                 id = A.id,
@@ -219,6 +224,7 @@ local function issue(id, silent)
     if IssueAchv(id, silent) then TASK.yieldT(0.1) end
 end
 local function refreshAchivement()
+    if showRecent then return end
     if not STAT.uid:match('^ANON[-_]') or STAT.aboutme ~= "Click the Zenith!" then issue('identity') end
     if BEST.highScore.DP > 0 then issue('intended_glitch') end
     if BEST.highScore.ASDHEXGVINMSNHVLrDP > Floors[9].top then issue('dusty_memories') end
@@ -322,6 +328,7 @@ function scene.load()
 end
 
 function scene.unload()
+    showRecent = false
     if clearNotice then
         TABLE.clear(AchvNotice)
     end
@@ -342,6 +349,9 @@ function scene.keyDown(key, isRep)
     if key == 'escape' or key == 'tab' then
         SFX.play('menuclick')
         SCN.back('none')
+    elseif key == 'r' then
+        showRecent = not showRecent
+        RefreshAchvList()
     end
     ZENITHA._cursor.active = true
     return true
