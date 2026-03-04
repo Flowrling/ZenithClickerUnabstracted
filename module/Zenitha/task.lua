@@ -26,7 +26,7 @@ function TASK.announceLock(name, time)
             --    MSG._new({'info', 'Locked ' .. name .. " for " .. time .. "s"})
 
             elseif TASK.lock('display_lock_total', 1) then  -- Display condensed locks as a total
-                MSG._new({'info', 'Locked ' .. fastLockCount .. ' small locks in the past second'})
+                MSG._new({'info', 'Locked ' .. fastLockCount .. ' small locks in the past second', time=0.8})
                 fastLockCount = 0
             else
                 fastLockCount = fastLockCount +1
